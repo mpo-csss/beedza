@@ -3,7 +3,8 @@ beedza
 
 Beer and pizza, or bees and keepers
 
-**Project beeza is developped during the french Complex System Summer School
+**Project beedza (name derived from the need of beer and pizza at the time of
+conception) is developped during the french Complex System Summer School
 happening at Le Havre, France from the 8th of july to the 18th of july.**
 
 It is a team effort for developping a model featuring Multi-Agent System,
