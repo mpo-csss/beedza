@@ -13,7 +13,11 @@ to init-simulation
     move-to one-of patches
     set color red
   ]
-  create-fields nb-fields
+  add-n-fields nb-fields
+end
+
+to add-n-fields [n]
+  create-fields n
   [
     set shape "flower"
     setxy random-xcor random-ycor
@@ -25,16 +29,40 @@ end
 to go-pollinate
   ask hives
   [
-    ask min-n-of 3 fields [distance myself]
+    ask min-n-of fields-to-check fields [distance myself]
     [
       set color blue
+      create-link-from myself
     ]
   ]
 end
 
+to disseminate
+  ask fields with [color = blue]
+  [
+    set size size + 1
+  ]
+  ask fields with [color != blue]
+  [
+    ifelse size < 1
+    [die]
+    [set size size - 1]  
+  ]
+
+  add-n-fields (count fields with [color = blue])  
+end
+
+to end-the-day
+  ask fields [ set color yellow ]
+  clear-links
+end
+
 to go
   go-pollinate
-  ;tick ; a tick a day
+  disseminate
+  display
+  end-the-day
+  tick ; a tick a day
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
@@ -67,9 +95,9 @@ ticks
 BUTTON
 17
 17
-149
+83
 50
-NIL
+setup
 init-simulation
 NIL
 1
@@ -84,13 +112,13 @@ NIL
 SLIDER
 816
 10
-853
+849
 160
 nb-hives
 nb-hives
 0
 100
-10
+3
 1
 1
 NIL
@@ -99,7 +127,7 @@ VERTICAL
 SLIDER
 854
 10
-891
+887
 160
 nb-fields
 nb-fields
@@ -127,6 +155,21 @@ NIL
 NIL
 NIL
 1
+
+SLIDER
+892
+10
+925
+160
+fields-to-check
+fields-to-check
+1
+10
+3
+1
+1
+NIL
+VERTICAL
 
 @#$#@#$#@
 ## WHAT IS IT?
