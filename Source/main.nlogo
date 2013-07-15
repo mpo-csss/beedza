@@ -1,5 +1,5 @@
 breed [hives hive]
-hives-own [wild? age]
+hives-own [wild? age hive-life]
 
 breed [fields field]
 fields-own [kind sizef]
@@ -10,6 +10,10 @@ to init-simulation
   set-patch-size 5
   populate-hives nb-hives
   add-n-fields nb-fields
+  
+  ask fields [ 
+    set size (sizef / maxsizef * maxsize)
+  ]
 end
 
 to populate-hives [n]
@@ -20,6 +24,7 @@ to populate-hives [n]
     move-to one-of patches
     set color red
     set size 5
+    set hive-life (random average-ttl + 1)
   ]
 end
 
@@ -30,18 +35,25 @@ to add-n-fields [n]
     setxy random-xcor random-ycor
     move-to one-of patches
     set color yellow
-    set sizef random 10 + 1
+    set sizef random (maxsizef - 1) + 1
   ]
 end
 
 to go-pollinate
   ask hives
   [
-    ask min-n-of fields-to-check fields [distance myself]
+    let rfc (random fields-to-check + 1)
+    if (count fields >= rfc)
     [
-      set color blue
-      ;create-link-from myself
-    ]
+      ask min-n-of rfc fields [distance myself]
+      [
+        set color blue
+        ;create-link-from myself
+      ]]
+  ]
+  ask one-of fields ; auto-polinisation
+  [
+    set color blue
   ]
 end
 
@@ -49,28 +61,34 @@ to disseminate
   ask fields with [color = blue]
   [
     set sizef min list (sizef + 1) maxsizef
-    set size (sizef / maxsizef * maxsize)
   ]
   ask fields with [color != blue]
   [
-    ifelse size < 1
+    ifelse sizef < 1
     [die]
-    [set size size - 1]  
+    [set sizef sizef - 1]
+  ]
+  
+  if ticks mod 365 = 0
+  [
+    add-n-fields (count fields with [color = blue])  
   ]
 
-  add-n-fields (count fields with [color = blue])  
 end
 
 to end-the-day
-  ask fields [ set color yellow ]
+  ask fields [ 
+    set color yellow     
+    set size (sizef / maxsizef * maxsize)
+  ]
   ask hives [
     ifelse age > hive-life
     [ die ]
     [ set age age + 1]
   ]
-  if ticks mod (random time-for-repopulation + 1) = 0
+  if ticks mod 365 = 0
   [
-    populate-hives random 3 + 1
+    populate-hives random 1 + 2
   ]
   clear-links
 end
@@ -136,7 +154,7 @@ nb-hives
 nb-hives
 0
 100
-3
+19
 1
 1
 NIL
@@ -150,8 +168,8 @@ SLIDER
 nb-fields
 nb-fields
 0
-100
-30
+1000
+67
 1
 1
 NIL
@@ -198,7 +216,7 @@ maxsize
 maxsize
 0
 20
-10
+5
 1
 1
 NIL
@@ -212,8 +230,8 @@ SLIDER
 maxsizef
 maxsizef
 0
-100
-50
+1000
+365
 1
 1
 NIL
@@ -241,30 +259,34 @@ SLIDER
 10
 927
 160
-hive-life
-hive-life
+average-ttl
+average-ttl
 0
-100
-62
+365
+70
 1
 1
 NIL
 VERTICAL
 
-SLIDER
-770
-249
-807
-431
-time-for-repopulation
-time-for-repopulation
-0
-100
-50
-1
-1
+PLOT
+734
+168
+1035
+351
+Fields & Hives
 NIL
-VERTICAL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"pen-1" 1.0 0 -1184463 true "" "plot count fields with [color = yellow]"
+"pen-2" 1.0 0 -2674135 true "" "plot count hives"
 
 @#$#@#$#@
 ## WHAT IS IT?
