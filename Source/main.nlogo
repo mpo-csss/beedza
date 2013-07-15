@@ -1,3 +1,5 @@
+; modified
+
 breed [hives hive]
 hives-own [wild? age hive-life]
 
@@ -210,7 +212,7 @@ VERTICAL
 SLIDER
 12
 388
-49
+45
 538
 maxsize
 maxsize
@@ -225,7 +227,7 @@ VERTICAL
 SLIDER
 848
 10
-885
+881
 160
 maxsizef
 maxsizef
@@ -257,7 +259,7 @@ NIL
 SLIDER
 890
 10
-927
+923
 160
 average-ttl
 average-ttl
