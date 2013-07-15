@@ -1,19 +1,26 @@
 breed [hives hive]
-hives-own [wild?]
+hives-own [wild? age]
 
 breed [fields field]
-fields-own [kind]
+fields-own [kind sizef]
 
 to init-simulation
   __clear-all-and-reset-ticks
-  create-hives nb-hives
+  resize-world 0 100 0 100
+  set-patch-size 5
+  populate-hives nb-hives
+  add-n-fields nb-fields
+end
+
+to populate-hives [n]
+  create-hives n
   [
     set shape "house"
     setxy random-xcor random-ycor
     move-to one-of patches
     set color red
+    set size 5
   ]
-  add-n-fields nb-fields
 end
 
 to add-n-fields [n]
@@ -23,6 +30,7 @@ to add-n-fields [n]
     setxy random-xcor random-ycor
     move-to one-of patches
     set color yellow
+    set sizef random 10 + 1
   ]
 end
 
@@ -32,7 +40,7 @@ to go-pollinate
     ask min-n-of fields-to-check fields [distance myself]
     [
       set color blue
-      create-link-from myself
+      ;create-link-from myself
     ]
   ]
 end
@@ -40,7 +48,8 @@ end
 to disseminate
   ask fields with [color = blue]
   [
-    set size size + 1
+    set sizef min list (sizef + 1) maxsizef
+    set size (sizef / maxsizef * maxsize)
   ]
   ask fields with [color != blue]
   [
@@ -54,6 +63,15 @@ end
 
 to end-the-day
   ask fields [ set color yellow ]
+  ask hives [
+    ifelse age > hive-life
+    [ die ]
+    [ set age age + 1]
+  ]
+  if ticks mod (random time-for-repopulation + 1) = 0
+  [
+    populate-hives random 3 + 1
+  ]
   clear-links
 end
 
@@ -66,13 +84,13 @@ to go
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
-374
+213
 10
-813
-470
-16
-16
-13.0
+728
+546
+-1
+-1
+5.0
 1
 10
 1
@@ -82,10 +100,10 @@ GRAPHICS-WINDOW
 1
 1
 1
--16
-16
--16
-16
+0
+100
+0
+100
 0
 0
 1
@@ -110,9 +128,9 @@ NIL
 1
 
 SLIDER
-816
+734
 10
-849
+767
 160
 nb-hives
 nb-hives
@@ -125,9 +143,9 @@ NIL
 VERTICAL
 
 SLIDER
-854
+772
 10
-887
+805
 160
 nb-fields
 nb-fields
@@ -146,6 +164,68 @@ BUTTON
 88
 start
 go
+T
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+SLIDER
+810
+10
+843
+160
+fields-to-check
+fields-to-check
+1
+10
+3
+1
+1
+NIL
+VERTICAL
+
+SLIDER
+12
+388
+49
+538
+maxsize
+maxsize
+0
+20
+10
+1
+1
+NIL
+VERTICAL
+
+SLIDER
+848
+10
+885
+160
+maxsizef
+maxsizef
+0
+100
+50
+1
+1
+NIL
+VERTICAL
+
+BUTTON
+17
+93
+81
+126
+step
+go
 NIL
 1
 T
@@ -157,15 +237,30 @@ NIL
 1
 
 SLIDER
-892
+890
 10
-925
+927
 160
-fields-to-check
-fields-to-check
+hive-life
+hive-life
+0
+100
+62
 1
-10
-3
+1
+NIL
+VERTICAL
+
+SLIDER
+770
+249
+807
+431
+time-for-repopulation
+time-for-repopulation
+0
+100
+50
 1
 1
 NIL
