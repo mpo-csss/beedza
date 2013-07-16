@@ -1,13 +1,15 @@
 globals [
-  max-distance-of-moving 500
-  
-  acacia-price 4.65
-  polyflower-price 3.48
-  lime-price 4.65
-  sunflower-price 2.32
+  nx ny
+  nb-beekeepers 
+  max-distance-of-moving
+  acacia-price
+  polyflower-price
+  lime-price 
+  sunflower-price 
+  hivesProd
+  fuelPriceByKm  ;;; euros by km
   
   ]
-
 
 breed [ beekeepers beekeeper ]
 
@@ -15,31 +17,79 @@ breed [ counties county]
 
 breed [ spots spot]
 
-counties-own ;;;; wrong patches instead
+patches-own ;;;; wrong patches instead
 [
-  spots-inside ;;; list of spots inside the county
   
+  spots-inside ;;; list of spots inside the county
 ]
 
 spots-own[
-  
   availability ;;; 0 for free or 1 for occupied
   utility ;;; flower-price
+  lifetime-of-flowers
   
   ]
 
 beekeepers-own
 [
-   current-spot;;
   
-  
-  
+  strategy-of-turtle 
+  current-spot;;
+  chosen-county;;
   travelDistance ;;; distance travelled by beekeepers during season
   honeyQuantity  ;;; quantity of honey recolted during season
-  
- 
+  totalCharges  ;;; cost of travelling
+  benefit ;;;;;;
+  TotalBenefit
   
 ]
+
+
+;;;;;INITIALISATIONS;;;;;;;
+
+
+;;;;;;;;Valeures Globales;;;;;;
+
+to globalinit
+  set max-distance-of-moving 500
+  
+  set acacia-price 4.65
+  set polyflower-price 3.48
+  set lime-price 4.65
+  set sunflower-price 2.32
+  set fuelPriceByKm 0.43
+ 
+end
+
+
+
+
+
+to setup-counties
+  __clear-all-and-reset-ticks 
+  file-open "all.txt"
+  while [not file-at-end?] [ 
+    set nx file-read
+    set ny file-read
+    set nb-beekeepers file-read
+     create-beekeepers nb-beekeepers[
+       setxy nx ny
+       set shape "person"
+       set size 0.1
+       set color blue
+       set strategy-of-turtle 1
+      ]
+    create-spots 9 [
+       setxy (nx + random 3) (ny + random 3)
+      
+    ]
+   
+  ]
+  file-close-all
+end
+
+
+
 
 ;;
 ;; SETUP AND HELPERS
@@ -49,10 +99,11 @@ beekeepers-own
 
 to setup
   clear-all
-  set-default-shape turtles "circle"
-  make-turtles
+  globalinit
+  setup-counties
   reset-ticks
 end
+
 
 
 
@@ -64,13 +115,33 @@ end
 to go
  
   ask beekeepers [
-       ifelse [flowers] of current-spot != 0 [ 
+    let current-patch patch-here
+    set current-spot spots-here
+    ifelse ticks != 0 [ ;;; if its not the beginning
+       let quant [utility] of current-spot 
+       ifelse quant = 0 [ 
           find-a-new-place
+ 
        ]
        [
           stay
+          recolt
        ]
-  ]
+    ]
+  [
+    follow-strategy
+    find-a-new-place
+    ]
+]
+  
+  ask spots [
+     set lifetime-of-flowers (lifetime-of-flowers - 1)
+     
+     if lifetime-of-flowers = 0 [
+      set utility polyflower-price
+     ]
+    
+    ]
   tick
 end
 
@@ -81,8 +152,20 @@ end
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-to find-new-place
+to find-a-new-place
   follow-strategy
+  recolt
+  
+end
+
+
+to stay
+  recolt
+end
+
+to recolt
+ set benefit (benefit + ( hivesProd * [utility] of current-spot))
+
   
 end
 
@@ -90,32 +173,34 @@ to follow-strategy
   ;;; its depends of the strategy of the turtle , calibrate in the initialisation
   if strategy-of-turtle = 1 [ ;;; choose a random spot
      let counties-around other counties in-radius max-distance-of-moving
-     let random-county one-of counties-around
-     move-to random-county
+     set chosen-county one-of counties-around
      ;;;;;
      cost-of-moving
      ;;;;;
-     ask random-county[
+     move-to chosen-county
+     
+     ask chosen-county[ ;;;;;;;;; PROBELMMMMMMMMMMMMMMMMMMMMMM;;;;;;;;;;;;;;
        
        let spots-on-county turtles-here
        let available-spots spots with [availability = 0] ;; free
        ifelse any? available-spots [ ;;; there are available spots
-          let best-spot max-one-of available-spots [ utility ]
-          set current-spot best-spot
-          move-to best-spot
-          
-          
-          
-         ]
-       [;;;; there arent available spots
+             let best-spot max-one-of available-spots [ utility ]
          
-         follow-strategy
+             set current-spot best-spot
+             move-to best-spot 
+             ask best-spot [ set availability 1]  
+ 
          
-         ]
+          [;;;; there arent available spots
+         
+            follow-strategy
+           ]
+       
+       ]
        
        ]
      
-    ]
+   ]
    if strategy-of-turtle = 2 [ ;;;; choose the nearest county
     
     ]
@@ -138,7 +223,12 @@ end
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
+to cost-of-moving
+  set travelDistance distance chosen-county
 
+  let charges (travelDistance * fuelPriceByKm)
+  set totalCharges (totalCharges + charges)
+end
 
 
 
@@ -146,7 +236,7 @@ end
 ;;; change the cost and profit variables during a recolt
 to calculate-cost-profit
   
-  
+  set totalBenefit ( benefit - totalCharges)
   
   
 end
