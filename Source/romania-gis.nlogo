@@ -20,20 +20,21 @@ to setup
   ask county-labels [ die ]
   
   foreach gis:feature-list-of romanian-county-borders-dataset
-    [ ;gis:set-drawing-color item random 14 base-colors
-      ;gis:fill ? 0
-      let county-color item random 14 base-colors
+    [ gis:set-drawing-color item random 14 base-colors
+      gis:fill ? 0
+      
+      ;let county-color item random 14 base-colors
       ask patches gis:intersecting ?
       [ set county-name gis:property-value ? "NAME_1"
-        set pcolor county-color ] ]
+        ;set pcolor county-color ] ]
     
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
 463
 5
-708
-223
+877
+440
 -1
 -1
 4.0

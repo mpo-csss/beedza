@@ -1,4 +1,5 @@
-globals [
+globals 
+[
   nx ny
   nb-beekeepers 
   max-distance-of-moving
@@ -8,7 +9,6 @@ globals [
   sunflower-price 
   hivesProd
   fuelPriceByKm  ;;; euros by km
-  
   ]
 
 breed [ beekeepers beekeeper ]
@@ -172,36 +172,31 @@ end
 to follow-strategy
   ;;; its depends of the strategy of the turtle , calibrate in the initialisation
   if strategy-of-turtle = 1 [ ;;; choose a random spot
-     let counties-around other counties in-radius max-distance-of-moving
-     set chosen-county one-of counties-around
-     ;;;;;
-     cost-of-moving
-     ;;;;;
-     move-to chosen-county
-     
-     ask chosen-county[ ;;;;;;;;; PROBELMMMMMMMMMMMMMMMMMMMMMM;;;;;;;;;;;;;;
-       
-       let spots-on-county turtles-here
-       let available-spots spots with [availability = 0] ;; free
-       ifelse any? available-spots 
-       [ ;;; there are available spots
-         let best-spot max-one-of available-spots [ utility ]
-         
-         set current-spot best-spot
-         move-to best-spot 
-         ask best-spot [ set availability 1]  
-         
-         
-           [;;;; there arent available spots
-             
-             follow-strategy
-           ]
-         
-       ]
-       
-     ]
-     
-   ]
+    let counties-around other counties in-radius max-distance-of-moving
+    set chosen-county one-of counties-around
+    ;;;;;
+    cost-of-moving
+    ;;;;;
+    move-to chosen-county
+    
+    ask chosen-county[ ;;;;;;;;; PROBELMMMMMMMMMMMMMMMMMMMMMM;;;;;;;;;;;;;;
+      
+      let spots-on-county turtles-here
+      let available-spots spots with [availability = 0] ;; free
+      ifelse any? available-spots 
+        [ ;;; there are available spots
+          let best-spot max-one-of available-spots [ utility ]
+          
+          set current-spot best-spot
+          move-to best-spot 
+          ask best-spot [ set availability 1]  ]
+      
+      
+        [;;;; there arent available spots
+          
+          follow-strategy
+        ] ] ]
+  
    if strategy-of-turtle = 2 [ ;;;; choose the nearest county
     
     ]
@@ -272,8 +267,8 @@ GRAPHICS-WINDOW
 1
 1
 0
-0
-0
+1
+1
 1
 -23
 23
