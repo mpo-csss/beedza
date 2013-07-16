@@ -1,0 +1,60 @@
+UTILITY
+_
+beekeep-utility = Qi (pi - k) - cdV - M
+beekeep-utility = honey-quant * (honey-price - prod-cost) - (travel-cost * distance * vehicles) - moving-cost
+
+honey-price (per kg)
+>
+honey-price-polyflower = 3.48
+honey-price-acacia = 4.65
+honey-price-lime = 4.65
+honey-price-sunflower = 2.32
+
+prod-cost (per hive)
+>
+100 euros (for all types)
+
+moving-cost
+>
+
+
+
+HONEY-QUANT
+_
+Qi = (B - 10000) hi E1
+honey-quant = (bees-quant - 10000) * harv-index * uncertainty
+
+harv-index
+>
+harv-index-polyflower = 0.000004
+harv-index-acacia = 0.0000135
+harv-index-lime = 0.000018
+harv-index-sunflower = 0.000006
+
+uncertainty
+>
+
+
+
+BEES-QUANT
+_
+Bt = Bt-1 (b - m1 - m2d)
+bees-quant (t) = bees-quant (t-1) * (bees-birth - bees-mort - travel-mort)
+
+bees-birth
+>
+
+bees-mort
+>
+
+travel-mort
+>
+
+
+
+min hive-quant per beekeeper = 30
+max hive-quant per beekeeper = 60
+max beekeeper per field = 1
+
+1 hive = 25000 bees
+
