@@ -1,35 +1,51 @@
 extensions [ matrix ]
+extensions [ array ]
 
 breed[capitals capital]
 breed[beekeepers beekeeper]
+globals[nb-keepers nx ny]
 
 to setup-capital
-  let latlong matrice "lat-long.txt" 41 2
-  
+  __clear-all-and-reset-ticks 
+  file-open "all.txt"
+  while [not file-at-end?] [
+  create-capitals 1 
+  [
+    set shape "circle"
+    set size 0.1
+    set color red
+    set nx file-read
+    set ny file-read
+    setxy nx ny
+    ;create-links-to capitals
+  ]
+  set nb-keepers file-read
+  create-beekeepers nb-keepers
+  [
+    setxy nx ny
+    set shape "person"
+    set size 0.1
+    set color blue
+    
+  ]
+  ]
+  file-close-all
+  ask capitals [ create-links-with other capitals ]
 end
 
 to setup-beekeeper
   
 end
 
-To-report matrice [ filename nb_row nb_col ]
-  File-open filename
-  Let mat n-values nb_row
-  [ n-values nb_col
-    [ file-read ]
-  ]
-  File-close
-  Report mat
-End
 @#$#@#$#@
 GRAPHICS-WINDOW
-783
+227
 10
-1302
-550
-16
-16
-15.42424242424243
+964
+768
+-1
+-1
+72.7
 1
 10
 1
@@ -39,10 +55,10 @@ GRAPHICS-WINDOW
 1
 1
 1
--16
-16
--16
-16
+0
+9
+0
+9
 0
 0
 1
