@@ -183,22 +183,23 @@ to follow-strategy
        
        let spots-on-county turtles-here
        let available-spots spots with [availability = 0] ;; free
-       ifelse any? available-spots [ ;;; there are available spots
-             let best-spot max-one-of available-spots [ utility ]
+       ifelse any? available-spots 
+       [ ;;; there are available spots
+         let best-spot max-one-of available-spots [ utility ]
          
-             set current-spot best-spot
-             move-to best-spot 
-             ask best-spot [ set availability 1]  
- 
+         set current-spot best-spot
+         move-to best-spot 
+         ask best-spot [ set availability 1]  
          
-          [;;;; there arent available spots
          
-            follow-strategy
+           [;;;; there arent available spots
+             
+             follow-strategy
            ]
-       
+         
        ]
        
-       ]
+     ]
      
    ]
    if strategy-of-turtle = 2 [ ;;;; choose the nearest county
@@ -950,7 +951,7 @@ Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 
 @#$#@#$#@
-NetLogo 5.0.1
+NetLogo 5.0.4
 @#$#@#$#@
 set too-close 1.5
 set too-far 2.0
