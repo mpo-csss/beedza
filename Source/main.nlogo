@@ -73,7 +73,7 @@ to disseminate
   
   if ticks mod 365 = 0
   [
-    add-n-fields (count fields with [color = blue])  
+    add-n-fields (count fields with [color = blue])
   ]
 
 end
