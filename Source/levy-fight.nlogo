@@ -12,8 +12,8 @@ to setup
     set t_mu 2
     set t_speed 1
     set size 5
-    ;pd
-    ;set color red
+    pd
+    set color red
   ]
 end
 
