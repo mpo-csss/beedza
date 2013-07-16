@@ -1,9 +1,8 @@
-UTILITY
+UTILITY (objectives of bee-keepers)
 _
-beekeep-utility = Qi (pi - k) - cdV - M
 beekeep-utility = honey-quant * (honey-price - prod-cost) - (travel-cost * distance * vehicles) - moving-cost
 
-honey-price (per kg)
+honey-price (per kg, per flower-type)
 >
 honey-price-polyflower = 3.48
 honey-price-acacia = 4.65
@@ -12,16 +11,17 @@ honey-price-sunflower = 2.32
 
 prod-cost (per hive)
 >
-100 euros (for all types)
+100 euros (for all flower types)
 
 moving-cost
 >
+moving-cost-other-county = 100 to 1000 euros (slider)
+moving-cost-same-county = 0 euros
 
 
 
-HONEY-QUANT
+HONEY-QUANT (for 1 hive)
 _
-Qi = (B - 10000) hi E1
 honey-quant = (bees-quant - 10000) * harv-index * uncertainty
 
 harv-index
@@ -33,22 +33,17 @@ harv-index-sunflower = 0.000006
 
 uncertainty
 >
+normal distri (slider)
 
 
 
-BEES-QUANT
+BEES-QUANT (in 1 hive as function of time)
 _
-Bt = Bt-1 (b - m1 - m2d)
-bees-quant (t) = bees-quant (t-1) * (bees-birth - bees-mort - travel-mort)
+ifelse ticks <= 21 
+	[2000 * ticks + 27000]
+	[500 * ticks + 65000]
 
-bees-birth
->
 
-bees-mort
->
-
-travel-mort
->
 
 
 
