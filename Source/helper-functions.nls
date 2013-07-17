@@ -26,29 +26,37 @@ to-report honey-quant [ ha hi ]
 end
 
 to-report harv-index [ hi ]
-  if hi = "AC" and acacia-season [ report 0.0000135 ] ; Acacia
-  if hi = "LM" and lime-season [ report 0.000018 ]  ; Lime
-  if hi = "SF" and sunflower-season [ report 0.000006 ]  ; Sunflower
-  
-  report 0.000004  ; Polyflower
+  ifelse flower-season
+  [ if hi = "AC" and acacia-season [ report 0.0000135 ] ; Acacia
+    if hi = "LM" and lime-season [ report 0.000018 ]  ; Lime
+    if hi = "SF" and sunflower-season [ report 0.000006 ]  ; Sunflower
+    report 0.000004  ; Polyflower 
+  ]
+  [ report 0.0 ]
   ; the following shouldn't happen
   error 1
 end
 
 to-report acacia-season
-  if ticks > 30 + abegin-uncertainty and ticks < 61 + aend-uncertainty
+  if yearly-ticks > 119 + abegin-uncertainty and yearly-ticks < 150 + aend-uncertainty
   [ report true ]
   report false
 end
 
 to-report lime-season
-  if ticks > 61 + lbegin-uncertainty and ticks < 91 + lend-uncertainty 
+  if yearly-ticks > 150 + lbegin-uncertainty and yearly-ticks < 180 + lend-uncertainty 
   [ report true ]
   report false
 end
 
 to-report sunflower-season
-  if ticks > 91 + sbegin-uncertainty and ticks < 122 + send-uncertainty
+  if yearly-ticks > 180 + sbegin-uncertainty and yearly-ticks < 211 + send-uncertainty
+  [ report true ]
+  report false
+end
+
+to-report flower-season
+  if yearly-ticks > 89 and yearly-ticks < 241
   [ report true ]
   report false
 end

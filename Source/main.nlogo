@@ -3,6 +3,7 @@ extensions [ gis ]
 globals [
   romanian-county-borders-dataset
   county-names
+  yearly-ticks
   abegin-uncertainty
   aend-uncertainty
   sbegin-uncertainty
@@ -40,12 +41,16 @@ to go
   
   ; move to a better spot (with different strategies)
   ask beekeepers
-  [ move-to with-strategy-maximize-profit ]
+  [ let s with-strategy-maximize-profit
+    if any? spots with [s = self]
+    [ move-to s]]
 
   ; collect honey and make money
   
-  if ticks > 153 [ stop ]
   tick
+  
+  set yearly-ticks ticks mod 365
+  if yearly-ticks = 0 [ setup-seasons-uncertainty ]
   
 end
 @#$#@#$#@
@@ -217,7 +222,7 @@ PENS
 "Accacia" 1.0 0 -2674135 true "" "plot count beekeepers-on spots with [ flower-type = \"AC\" and acacia-season ]"
 "Sunflower" 1.0 0 -1184463 true "" "plot count beekeepers-on spots with [ flower-type = \"SF\" and sunflower-season ]"
 "Lime" 1.0 0 -13840069 true "" "plot count beekeepers-on spots with [ flower-type = \"LM\" and lime-season ]"
-"Polyflower" 1.0 0 -8630108 true "" "plot count beekeepers-on spots with [ flower-type = \"PF\" ]"
+"Polyflower" 1.0 0 -8630108 true "" "plot count beekeepers-on spots with [ flower-type = \"PF\" and flower-season]"
 
 PLOT
 364
@@ -251,6 +256,21 @@ season-uncertainty
 20
 20
 0.1
+1
+NIL
+VERTICAL
+
+SLIDER
+215
+50
+253
+246
+d-max
+d-max
+0
+30
+30
+1
 1
 NIL
 VERTICAL

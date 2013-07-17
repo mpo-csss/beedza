@@ -1,4 +1,4 @@
 to-report with-strategy-maximize-profit
   ;; to explode. beekeeper do not know in advance
-  report max-one-of spots with [ not any? beekeepers-on self] [ beekeep-utility 5 flower-type (distance myself) ]
+  report max-one-of spots in-radius d-max with [ not any? beekeepers-on self] [ beekeep-utility 5 flower-type (distance myself) ]
 end
