@@ -1,3 +1,9 @@
+;;
+;; GIS maps (shp files) are taken from:
+;;   - http://download.geofabrik.de/europe/romania.html
+;;   - http://www.gadm.org/download
+;; and then filtered to only keep relevant information
+
 to setup-gis
     
   resize-world 0 250 0 125
