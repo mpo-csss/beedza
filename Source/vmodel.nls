@@ -22,3 +22,12 @@ to setup-beekeepers
     move-to one-of centroids
     if trace-on [ set color red pd ] ]
 end
+
+to setup-seasons-uncertainty
+  set abegin-uncertainty random-normal 0 season-uncertainty
+  set aend-uncertainty random-normal 0 season-uncertainty
+  set sbegin-uncertainty random-normal 0 season-uncertainty
+  set send-uncertainty random-normal 0 season-uncertainty
+  set lbegin-uncertainty random-normal 0 season-uncertainty
+  set lend-uncertainty random-normal 0 season-uncertainty
+end

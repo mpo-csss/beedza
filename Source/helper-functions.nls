@@ -26,12 +26,31 @@ to-report honey-quant [ ha hi ]
 end
 
 to-report harv-index [ hi ]
-  if hi = "PF" [ report 0.000004 ]  ; Polyflower
-  if hi = "AC" [ report 0.0000135 ] ; Accacia
-  if hi = "LM" [ report 0.000018 ]  ; Lime
-  if hi = "SF" [ report 0.000006 ]  ; Sunflower
+  if hi = "AC" and acacia-season [ report 0.0000135 ] ; Acacia
+  if hi = "LM" and lime-season [ report 0.000018 ]  ; Lime
+  if hi = "SF" and sunflower-season [ report 0.000006 ]  ; Sunflower
+  
+  report 0.000004  ; Polyflower
   ; the following shouldn't happen
   error 1
+end
+
+to-report acacia-season
+  if ticks > 30 + abegin-uncertainty and ticks < 61 + aend-uncertainty
+  [ report true ]
+  report false
+end
+
+to-report lime-season
+  if ticks > 61 + lbegin-uncertainty and ticks < 91 + lend-uncertainty 
+  [ report true ]
+  report false
+end
+
+to-report sunflower-season
+  if ticks > 91 + sbegin-uncertainty and ticks < 122 + send-uncertainty
+  [ report true ]
+  report false
 end
 
 to-report uncertainty
@@ -44,10 +63,12 @@ to-report bees-quant [ hive-age ]
     [ report 500 * hive-age + 65000 ]
 end
 
+
+
 to-report color-flower [ hi ]
   if hi = "PF" [ report VIOLET ]  ; Polyflower
   if hi = "AC" [ report RED ] ; Accacia
-  if hi = "LM" [ report GREEN ]  ; Lime
+  if hi = "LM" [ report LIME ]  ; Lime
   if hi = "SF" [ report YELLOW ]  ; Sunflower
   ; the following shouldn't happen
   error 1

@@ -2,7 +2,13 @@ extensions [ gis ]
 
 globals [
   romanian-county-borders-dataset
-  county-names ]
+  county-names
+  abegin-uncertainty
+  aend-uncertainty
+  sbegin-uncertainty
+  send-uncertainty
+  lbegin-uncertainty
+  lend-uncertainty ]
 
 __includes [ 
   "setup-gis.nls"  
@@ -22,6 +28,7 @@ to setup
   setup-gis
   setup-spots
   setup-beekeepers
+  setup-seasons-uncertainty
 
 end
 
@@ -37,14 +44,15 @@ to go
 
   ; collect honey and make money
   
+  if ticks > 153 [ stop ]
   tick
   
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
-317
+307
 10
-1331
+1321
 545
 -1
 -1
@@ -109,17 +117,17 @@ harvesting-uncertainty
 harvesting-uncertainty
 0
 10
-1
+3.9
 0.1
 1
 NIL
 VERTICAL
 
 SLIDER
-135
-49
-168
-244
+177
+50
+210
+245
 travel-cost
 travel-cost
 0
@@ -193,8 +201,8 @@ NIL
 PLOT
 12
 573
-505
-885
+359
+768
 Emplacements
 NIL
 NIL
@@ -206,10 +214,46 @@ true
 true
 "" ""
 PENS
-"Accacia" 1.0 0 -2674135 true "" "plot count beekeepers-on spots with [ flower-type = \"AC\" ]"
-"Sunflower" 1.0 0 -1184463 true "" "plot count beekeepers-on spots with [ flower-type = \"SF\" ]"
-"Lime" 1.0 0 -10899396 true "" "plot count beekeepers-on spots with [ flower-type = \"LM\" ]"
+"Accacia" 1.0 0 -2674135 true "" "plot count beekeepers-on spots with [ flower-type = \"AC\" and acacia-season ]"
+"Sunflower" 1.0 0 -1184463 true "" "plot count beekeepers-on spots with [ flower-type = \"SF\" and sunflower-season ]"
+"Lime" 1.0 0 -13840069 true "" "plot count beekeepers-on spots with [ flower-type = \"LM\" and lime-season ]"
 "Polyflower" 1.0 0 -8630108 true "" "plot count beekeepers-on spots with [ flower-type = \"PF\" ]"
+
+PLOT
+364
+574
+691
+768
+Flower season
+NIL
+NIL
+0.0
+10.0
+0.0
+2.0E-5
+true
+true
+"" ""
+PENS
+"Polyflower" 1.0 0 -8630108 true "" "plot harv-index \"PL\""
+"Sunflower" 1.0 0 -1184463 true "" "plot harv-index \"SF\""
+"Lime" 1.0 0 -13840069 true "" "plot harv-index \"LM\""
+"Acacia" 1.0 0 -2674135 true "" "plot harv-index \"AC\""
+
+SLIDER
+133
+50
+171
+247
+season-uncertainty
+season-uncertainty
+0
+20
+20
+0.1
+1
+NIL
+VERTICAL
 
 @#$#@#$#@
 ## WHAT IS IT?
