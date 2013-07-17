@@ -3,7 +3,14 @@ to-report with-collective-strategy
   ;let potential-empty-spots spots with [ not any? beekeepers-here or member? myself beekeepers-here ]
   ;let pes-radius-limited potential-empty-spots in-radius d-max
   ;report max-one-of pes-radius-limited [ beekeep-utility flower-type ([amount-of-hives] of myself) (distance myself) ]
-  report max-one-of (spots in-radius d-max) with [ not any? beekeepers-here or member? myself beekeepers-here ] [ beekeep-utility flower-type [amount-of-hives] of myself (distance myself) ]
+   set persistence-length d-max
+  let available-spots spots in-radius persistence-length
+  ifelse any? available-spots [
+  report max-one-of available-spots with [ not any? beekeepers-here or member? myself beekeepers-here ] [ beekeep-utility flower-type [amount-of-hives] of myself (distance myself) ]
+  ]
+  [
+    set persistence-length persistence-length + d-max
+    ]
 end
 
 to-report with-blind-strategy

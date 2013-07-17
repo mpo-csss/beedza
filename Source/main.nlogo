@@ -9,7 +9,10 @@ globals [
   sbegin-uncertainty
   send-uncertainty
   lbegin-uncertainty
-  lend-uncertainty ]
+  lend-uncertainty 
+  averageProfit
+  sumOfallBeekeepersProfit
+  ]
 
 __includes [ 
   "setup-gis.nls"  
@@ -44,8 +47,8 @@ to go
   ask beekeepers
   [ if strategy = "with-collective-strategy" 
     [ let s with-collective-strategy 
-      if any? spots with [ s = self ] [ move-to with-collective-strategy ] ]
-  if strategy = "with-blind-strategy" [ move-to with-blind-strategy ] ]
+      if any? spots with [ s = self ] [ set old-spot [who] of spots-here move-to with-collective-strategy evaluation-procedure ] ]
+  if strategy = "with-blind-strategy" [ set old-spot [who] of spots-here move-to with-blind-strategy evaluation-procedure ] ]
   
   ; collect honey and make money
   
@@ -55,7 +58,10 @@ to go
   go-pollinate
   
   set yearly-ticks ticks mod 365
-  if yearly-ticks = 0 [ setup-seasons-uncertainty ]
+  if yearly-ticks = 0 [ 
+    setup-seasons-uncertainty 
+    setup-new-season
+    ]
   
 end
 @#$#@#$#@
@@ -297,9 +303,27 @@ SWITCH
 488
 pollinisation-map-on
 pollinisation-map-on
-0
+1
 1
 -1000
+
+PLOT
+703
+575
+952
+768
+Average Profit
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -16777216 true "" "plot averageProfit"
 
 @#$#@#$#@
 ## WHAT IS IT?
@@ -644,7 +668,7 @@ Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 
 @#$#@#$#@
-NetLogo 5.0.4
+NetLogo 5.0.3
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@

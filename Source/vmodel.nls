@@ -1,7 +1,15 @@
 breed [ beekeepers beekeeper ]
-beekeepers-own [ amount-of-hives ]
+beekeepers-own [ 
+  amount-of-hives
+  old-spot
+  chosen-spot
+  persistence-length
+   ]
 
 breed [ spots spot ]
+
+
+
 
 breed [ centroids centroid ]
 patches-own [ county-name ]
@@ -40,4 +48,10 @@ to setup-seasons-uncertainty
   set send-uncertainty random-normal 0 season-uncertainty
   set lbegin-uncertainty random-normal 0 season-uncertainty
   set lend-uncertainty random-normal 0 season-uncertainty
+end
+
+
+to setup-new-season
+  set sumOfallBeekeepersProfit 0
+  set averageProfit 0
 end

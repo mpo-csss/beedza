@@ -81,3 +81,26 @@ to-report color-flower [ hi ]
   ; the following shouldn't happen
   error 1
 end
+
+
+to dailyRevenue
+  
+  let N count beekeepers
+   
+   ;  let travel-distance distance spot one-of old-spot]
+    let travel-distance 0
+    if any? spots-here [;flower-type [amount-of-hives] of myself (distance myself)
+    set sumOfallBeekeepersProfit (sumOfallBeekeepersProfit + beekeep-utility  ([flower-type] of one-of spots-here) amount-of-hives travel-distance )
+    ]
+    
+  
+  
+  set averageProfit sumOfallBeekeepersProfit / N
+  
+end
+
+
+to evaluation-procedure
+  dailyRevenue
+  
+end
