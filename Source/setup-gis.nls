@@ -19,7 +19,10 @@ to setup-gis
       
       set county-names fput cn county-names
       
-      gis:set-drawing-color grey
+      gis:set-drawing-color grey - 3
+      gis:fill ? 1
+      
+      gis:set-drawing-color black
       gis:draw ? 1
       
       ;let county-color item random 14 base-colors
