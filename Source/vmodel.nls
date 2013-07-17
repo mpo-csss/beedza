@@ -1,5 +1,4 @@
 breed [ beekeepers beekeeper ]
-beekeepers-own [ age-hive ]
 breed [ spots spot ]
 
 beekeepers-own [ amount-of-hives ]

@@ -276,7 +276,7 @@ strategy
 SLIDER
 213
 51
-250
+246
 244
 max-wild-hive
 max-wild-hive
