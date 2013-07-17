@@ -2,19 +2,22 @@ extensions [ gis ]
 
 breed [ beekeepers beekeeper ]
 breed [ spots spot ]
+spots-own [ flower-type ]
 
 breed [ centroids centroid ]
 patches-own [ county-name ]
-globals [ romanian-county-borders-dataset ]
+globals [ romanian-county-borders-dataset county-names ]
 
 to setup-gis
-  ca ; start fresh, clean all
-  
-  resize-world 0 200 0 100
+    
+  resize-world 0 250 0 125
   set-patch-size 4
   
   ; initialize patch name
   ask patches [ set county-name "No name" ]
+  
+  ; initialize county-names
+  set county-names []
   
   ; import counties borders from a shp file
   set romanian-county-borders-dataset gis:load-dataset "../Data/RoumADMIN.shp"
@@ -24,8 +27,10 @@ to setup-gis
   foreach gis:feature-list-of romanian-county-borders-dataset
     [ let cn gis:property-value ? "NAME_1"
       
-      gis:set-drawing-color item random 14 base-colors
-      gis:fill ? 0
+      set county-names fput cn county-names
+      
+      gis:set-drawing-color grey
+      gis:draw ? 1
       
       ;let county-color item random 14 base-colors
       ask patches gis:intersecting ?
@@ -38,24 +43,42 @@ to setup-gis
       [ let xy gis:location-of gis:centroid-of ?
         setxy (item 0 xy) (item 1 xy)
         set shape "house"
-        set size 3 ] ]
+        set size 2 ] ]
+end
+
+to setup-spots
+  foreach county-names
+  [ create-spots amount-of-spt
+    [ set size 2
+      set shape "star"
+      set flower-type one-of (list "PF" "AC" "LM" "SF")
+      set color color-flower flower-type
+      move-to one-of patches with [ county-name = ?] ] ]
 end
 
 to setup-beekeepers
   create-beekeepers amount-of-bk
   [ set shape "person"
     set size 1
-    move-to one-of centroids ]
+    move-to one-of centroids
+    if trace-on [ set color red pd ] ]
 end
 
 to setup
+  
+  ca ; start fresh, clean all
+  reset-ticks ; start counter
+
   setup-gis
+  setup-spots
   setup-beekeepers
 end
 
 to go
   ask beekeepers
-  [ move-to max-one-of other centroids [ beekeep-utility 5 "AC" (distance myself)] ]
+  [ move-to max-one-of spots with [ not any? beekeepers-on self] [ beekeep-utility 5 flower-type (distance myself) ] ]
+  
+  tick
 end
 
 ;;;;;;;;;;;;;;;;;;;;;;
@@ -104,12 +127,20 @@ to-report bees-quant [ hive-age ]
     [ report 500 * hive-age + 65000 ]
 end
 
+to-report color-flower [ hi ]
+  if hi = "PF" [ report VIOLET ]  ; Polyflower
+  if hi = "AC" [ report RED ] ; Accacia
+  if hi = "LM" [ report GREEN ]  ; Lime
+  if hi = "SF" [ report YELLOW ]  ; Sunflower
+  ; the following shouldn't happen
+  error 1
+end
 @#$#@#$#@
 GRAPHICS-WINDOW
-380
+317
 10
-1194
-445
+1331
+545
 -1
 -1
 4.0
@@ -119,13 +150,13 @@ GRAPHICS-WINDOW
 1
 1
 0
-1
-1
+0
+0
 1
 0
-200
+250
 0
-100
+125
 0
 0
 1
@@ -158,17 +189,17 @@ amount-of-bk
 amount-of-bk
 10
 440
-100
+101
 1
 1
 NIL
 VERTICAL
 
 SLIDER
-50
-47
-87
-242
+94
+49
+131
+244
 harvesting-uncertainty
 harvesting-uncertainty
 0
@@ -180,19 +211,79 @@ NIL
 VERTICAL
 
 SLIDER
-91
-47
-128
-242
+135
+49
+172
+244
 travel-cost
 travel-cost
 0
-50
+10
+2
+0.1
+1
+NIL
+VERTICAL
+
+BUTTON
+86
+10
+150
+43
+step
+go
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+SWITCH
 5
+490
+123
+523
+trace-on
+trace-on
+0
+1
+-1000
+
+SLIDER
+52
+48
+89
+243
+amount-of-spt
+amount-of-spt
+0
+100
+10
 1
 1
 NIL
 VERTICAL
+
+BUTTON
+153
+10
+216
+43
+NIL
+go
+T
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
 
 @#$#@#$#@
 ## WHAT IS IT?
