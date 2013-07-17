@@ -28,7 +28,7 @@ to setup-beekeepers
       set size 1
       move-to one-of centroids-on patches with [ county-name = location-bk ]
     if trace-on [ set color temp pd ] 
-    set amount-of-hives random-normal 45 2.0 ]
+    set amount-of-hives random-normal 45 15 ]
     set temp temp + 3
   ]
   file-close

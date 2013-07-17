@@ -2,9 +2,11 @@ spots-own [ flower-type pollinisation-score amount-of-wild-hives ]
 
 to setup-wild-bees
   ask spots
-  [ set amount-of-wild-hives random max-wild-hive ]
+  [ set amount-of-wild-hives random max-wild-hives ]
 end
 
-to polinate
-
+to pollinate
+  if flower-season [
+    ask spots
+    [ set pollinisation-score amount-of-wild-hives + [amount-of-hives] of beekeepers-here ] ]
 end

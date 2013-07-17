@@ -3,8 +3,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;
 
 ; beekeep-utility = honey-quant * (honey-price - prod-cost) - (travel-cost * distance * vehicles) - moving-cost
-to-report beekeep-utility [ha hi ah d]
-  report (honey-quant ha hi ah) * ((honey-price hi) - prod-cost) - (travel-cost * d)
+to-report beekeep-utility [hi ah d]
+  report (honey-quant hi ah) * ((honey-price hi) - prod-cost) - (travel-cost * d)
 end
 
 to-report honey-price [ hi ]
@@ -21,8 +21,8 @@ to-report prod-cost
 end
 
 ; honey-quant = (bees-quant - 10000) * harv-index * uncertainty
-to-report honey-quant [ ha hi amount-h ]
-  report ((bees-quant ha) - 10000) * (harv-index hi) * amount-h * uncertainty
+to-report honey-quant [ hi amount-h ]
+  report (bees-quant - 10000) * (harv-index hi) * amount-h * uncertainty
 end
 
 to-report harv-index [ hi ]
@@ -65,10 +65,10 @@ to-report uncertainty
   report random-normal 1.0 harvesting-uncertainty
 end
 
-to-report bees-quant [ hive-age ]
-  ifelse hive-age <= 21
-    [ report 2000 * hive-age + 27000 ]
-    [ report 500 * hive-age + 65000 ]
+to-report bees-quant
+  ifelse ticks <= 21
+    [ report 2000 * ticks + 27000 ]
+    [ report 500 * ticks + 65000 ]
 end
 
 

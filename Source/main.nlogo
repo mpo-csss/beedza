@@ -110,7 +110,7 @@ harvesting-uncertainty
 harvesting-uncertainty
 0
 10
-3.3
+0
 0.1
 1
 NIL
@@ -124,8 +124,8 @@ SLIDER
 travel-cost
 travel-cost
 0
-1
-0.4
+5
+5
 0.1
 1
 NIL
@@ -242,7 +242,7 @@ season-uncertainty
 season-uncertainty
 0
 20
-4
+10
 0.1
 1
 NIL
@@ -257,7 +257,7 @@ d-max
 d-max
 0
 30
-10
+8
 1
 1
 NIL
@@ -278,11 +278,11 @@ SLIDER
 51
 246
 244
-max-wild-hive
-max-wild-hive
+max-wild-hives
+max-wild-hives
 0
 100
-50
+90
 1
 1
 NIL
