@@ -21,12 +21,10 @@ to setup-beekeepers
   [
     let amount-of-bk file-read
     let location-bk file-read
-    show amount-of-bk
     create-beekeepers amount-of-bk
     [ set shape "person"
       set size 1
-      show location-bk
-      move-to one-of patches with [ county-name = location-bk ]  
+      move-to one-of centroids-on patches with [ county-name = location-bk ]
     if trace-on [ set color red pd ] ]
   ]
   file-close

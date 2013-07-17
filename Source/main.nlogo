@@ -234,7 +234,7 @@ PENS
 SLIDER
 133
 50
-171
+166
 247
 season-uncertainty
 season-uncertainty
@@ -249,7 +249,7 @@ VERTICAL
 SLIDER
 215
 50
-253
+248
 246
 d-max
 d-max
