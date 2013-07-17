@@ -16,13 +16,21 @@ to setup-spots
 end
 
 to setup-beekeepers
-  create-beekeepers amount-of-bk
-  [ set shape "person"
-    set size 1
-    move-to one-of centroids
+  file-open "beekeepers-initial-location.txt"
+  while [not file-at-end?]
+  [
+    let amount-of-bk file-read
+    let location-bk file-read
+    show amount-of-bk
+    create-beekeepers amount-of-bk
+    [ set shape "person"
+      set size 1
+      show location-bk
+      move-to one-of patches with [ county-name = location-bk ]  
     if trace-on [ set color red pd ] ]
+  ]
+  file-close
 end
-
 to setup-seasons-uncertainty
   set abegin-uncertainty random-normal 0 season-uncertainty
   set aend-uncertainty random-normal 0 season-uncertainty

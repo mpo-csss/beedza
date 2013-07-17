@@ -100,21 +100,6 @@ NIL
 1
 
 SLIDER
-10
-47
-43
-242
-amount-of-bk
-amount-of-bk
-10
-440
-101
-1
-1
-NIL
-VERTICAL
-
-SLIDER
 94
 49
 127
@@ -123,7 +108,7 @@ harvesting-uncertainty
 harvesting-uncertainty
 0
 10
-1
+3.3
 0.1
 1
 NIL
