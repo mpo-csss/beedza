@@ -16,7 +16,7 @@ to setup-gis
   ; initialize patch name
   ask patches [ set county-name "No name" ]
   
-  ; initialize county-names
+  ; initialize county-names to an empty list
   set county-names []
   
   ; import counties borders from a shp file
@@ -53,7 +53,7 @@ to setup-spots
       set shape "star"
       set flower-type one-of (list "PF" "AC" "LM" "SF")
       set color color-flower flower-type
-      move-to one-of patches with [ county-name = ?] ] ]
+      move-to one-of patches with [ county-name = ? ] ] ]
 end
 
 to setup-beekeepers
@@ -75,6 +75,7 @@ to setup
 end
 
 to go
+  ; move according to a strategy (here, maximize the utility)
   ask beekeepers
   [ move-to max-one-of spots with [ not any? beekeepers-on self] [ beekeep-utility 5 flower-type (distance myself) ] ]
   
@@ -91,10 +92,10 @@ to-report beekeep-utility [ha hi d]
 end
 
 to-report honey-price [ hi ]
-  if hi = "PF" [ report 3.48 ]  ; Polyflower
+  if hi = "PF" [ report 3.48 ] ; Polyflower
   if hi = "AC" [ report 4.65 ] ; Accacia
-  if hi = "LM" [ report 4.65 ]  ; Lime
-  if hi = "SF" [ report 2.32 ]  ; Sunflower
+  if hi = "LM" [ report 4.65 ] ; Lime
+  if hi = "SF" [ report 2.32 ] ; Sunflower
   ; the following shouldn't happen
   error 1
 end
@@ -284,6 +285,27 @@ NIL
 NIL
 NIL
 1
+
+PLOT
+12
+573
+505
+885
+Emplacements
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+true
+"" ""
+PENS
+"Accacia" 1.0 0 -2674135 true "" "plot count beekeepers-on spots with [ flower-type = \"AC\" ]"
+"Sunflower" 1.0 0 -1184463 true "" "plot count beekeepers-on spots with [ flower-type = \"SF\" ]"
+"Lime" 1.0 0 -10899396 true "" "plot count beekeepers-on spots with [ flower-type = \"LM\" ]"
+"Polyflower" 1.0 0 -8630108 true "" "plot count beekeepers-on spots with [ flower-type = \"PF\" ]"
 
 @#$#@#$#@
 ## WHAT IS IT?
