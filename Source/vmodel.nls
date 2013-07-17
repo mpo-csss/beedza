@@ -4,6 +4,8 @@ beekeepers-own [
   old-spot
   chosen-spot
   persistence-length
+  profit
+  total-travel-distance
    ]
 
 breed [ spots spot ]

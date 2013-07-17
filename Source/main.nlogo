@@ -12,6 +12,7 @@ globals [
   lend-uncertainty 
   averageProfit
   sumOfallBeekeepersProfit
+ 
   ]
 
 __includes [ 
@@ -47,8 +48,8 @@ to go
   ask beekeepers
   [ if strategy = "with-collective-strategy" 
     [ let s with-collective-strategy 
-      if any? spots with [ s = self ] [ set old-spot [who] of spots-here move-to with-collective-strategy evaluation-procedure ] ]
-  if strategy = "with-blind-strategy" [ set old-spot [who] of spots-here move-to with-blind-strategy evaluation-procedure ] ]
+      if any? spots with [ s = self ] [ set old-spot min-one-of spots [distance myself] move-to with-collective-strategy evaluation-procedure ] ]
+  if strategy = "with-blind-strategy" [ set old-spot min-one-of spots [distance myself] move-to with-blind-strategy evaluation-procedure ] ]
   
   ; collect honey and make money
   
@@ -279,7 +280,7 @@ CHOOSER
 strategy
 strategy
 "with-collective-strategy" "with-blind-strategy"
-0
+1
 
 SLIDER
 213

@@ -86,9 +86,14 @@ end
 to dailyRevenue
   
   let N count beekeepers
+   ; ifelse old-spot not empty? [
+   set old-spot min-one-of spots [distance myself]
    
-   ;  let travel-distance distance spot one-of old-spot]
-    let travel-distance 0
+   let travel-distance distance old-spot
+   ; ]
+    ;[
+   ; set travel-distance 0
+    ;]
     if any? spots-here [;flower-type [amount-of-hives] of myself (distance myself)
     set sumOfallBeekeepersProfit (sumOfallBeekeepersProfit + beekeep-utility  ([flower-type] of one-of spots-here) amount-of-hives travel-distance )
     ]
@@ -102,5 +107,12 @@ end
 
 to evaluation-procedure
   dailyRevenue
+  individual-caract
   
+end
+
+to individual-caract
+  let travel-distance distance old-spot
+  set profit (profit + beekeep-utility  ([flower-type] of one-of spots-here) amount-of-hives travel-distance )
+  set total-travel-distance (total-travel-distance + travel-distance )
 end
