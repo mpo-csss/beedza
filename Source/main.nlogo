@@ -9,8 +9,7 @@ globals [
   sbegin-uncertainty
   send-uncertainty
   lbegin-uncertainty
-  lend-uncertainty 
-  s
+  lend-uncertainty
   ]
 
 __includes [ 
@@ -18,6 +17,7 @@ __includes [
   "vmodel.nls"
   "vmodel-strategies.nls"
   "helper-functions.nls"
+  "bmodel.nls"
 ]
 
 ;;
@@ -43,8 +43,10 @@ to go
   
   ; move to a better spot (with different strategies)
   ask beekeepers
-  [ if strategy = "with-collective-strategy" [ move-to with-collective-strategy  ]
-    if strategy = "with-blind-strategy" [ move-to with-blind-strategy ] ]
+  [ if strategy = "with-collective-strategy" 
+    [ let s with-collective-strategy 
+      if any? spots with [ s = self ] [ move-to with-collective-strategy ] ]
+  if strategy = "with-blind-strategy" [ move-to with-blind-strategy ] ]
   
   ; collect honey and make money
   
@@ -270,7 +272,7 @@ CHOOSER
 strategy
 strategy
 "with-collective-strategy" "with-blind-strategy"
-1
+0
 
 @#$#@#$#@
 ## WHAT IS IT?
