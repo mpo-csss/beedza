@@ -4,9 +4,16 @@ globals [
   romanian-county-borders-dataset
   county-names ]
 
-__includes [ "vmodel.nls" ]
+__includes [ 
+  "setup-gis.nls"  
+  "vmodel.nls"
+  "vmodel-strategies.nls"
+  "helper-functions.nls"
+]
 
-
+;;
+;; General setup of the simulation
+;;
 to setup
   
   ca ; start fresh, clean all
@@ -15,44 +22,23 @@ to setup
   setup-gis
   setup-spots
   setup-beekeepers
+
 end
 
-to setup-gis
-    
-  resize-world 0 250 0 125
-  set-patch-size 4
+;;
+;; Starts the simulation.
+;; This is the place where we mix both levels
+;;
+to go
   
-  ; initialize patch name
-  ask patches [ set county-name "No name" ]
+  ; move to a better spot (with different strategies)
+  ask beekeepers
+  [ move-to with-strategy-maximize-profit ]
+
+  ; collect honey and make money
   
-  ; initialize county-names to an empty list
-  set county-names []
+  tick
   
-  ; import counties borders from a shp file
-  set romanian-county-borders-dataset gis:load-dataset "../Data/RoumADMIN.shp"
-  gis:set-world-envelope (gis:envelope-union-of 
-    (gis:envelope-of romanian-county-borders-dataset))
-  
-  foreach gis:feature-list-of romanian-county-borders-dataset
-    [ let cn gis:property-value ? "NAME_1"
-      
-      set county-names fput cn county-names
-      
-      gis:set-drawing-color grey
-      gis:draw ? 1
-      
-      ;let county-color item random 14 base-colors
-      ask patches gis:intersecting ?
-      [ set county-name cn
-        ;set pcolor county-color 
-      ] 
-    
-      ; set centroids
-      create-centroids 1
-      [ let xy gis:location-of gis:centroid-of ?
-        setxy (item 0 xy) (item 1 xy)
-        set shape "house"
-        set size 2 ] ]
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
