@@ -11,7 +11,6 @@ globals [
   lbegin-uncertainty
   lend-uncertainty 
   s
-  
   ]
 
 __includes [ 
@@ -44,14 +43,9 @@ to go
   
   ; move to a better spot (with different strategies)
   ask beekeepers
-  [ 
-    if strategy = "with-collective-strategy" [set s "with-collective-strategy" ]
-    if strategy = "with-blind-strategy" [set s "with-blind-strategy" ]
- 
-    
-    if any? spots with [s = self]
-    [ move-to ( s)]]
-
+  [ if strategy = "with-collective-strategy" [ move-to with-collective-strategy  ]
+    if strategy = "with-blind-strategy" [ move-to with-blind-strategy ] ]
+  
   ; collect honey and make money
   
   ; tick!
@@ -130,7 +124,7 @@ travel-cost
 travel-cost
 0
 1
-0
+0.4
 0.1
 1
 NIL
@@ -173,7 +167,7 @@ amount-of-spt
 amount-of-spt
 0
 100
-10
+24
 1
 1
 NIL
@@ -247,7 +241,7 @@ season-uncertainty
 season-uncertainty
 0
 20
-20
+4
 0.1
 1
 NIL
@@ -262,7 +256,7 @@ d-max
 d-max
 0
 30
-30
+10
 1
 1
 NIL
@@ -621,7 +615,7 @@ Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 
 @#$#@#$#@
-NetLogo 5.0.3
+NetLogo 5.0.4
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
