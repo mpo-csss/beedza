@@ -1,0 +1,37 @@
+to setup-gis
+    
+  resize-world 0 250 0 125
+  set-patch-size 4
+  
+  ; initialize patch name
+  ask patches [ set county-name "No name" ]
+  
+  ; initialize county-names to an empty list
+  set county-names []
+  
+  ; import counties borders from a shp file
+  set romanian-county-borders-dataset gis:load-dataset "../Data/RoumADMIN.shp"
+  gis:set-world-envelope (gis:envelope-union-of 
+    (gis:envelope-of romanian-county-borders-dataset))
+  
+  foreach gis:feature-list-of romanian-county-borders-dataset
+    [ let cn gis:property-value ? "NAME_1"
+      
+      set county-names fput cn county-names
+      
+      gis:set-drawing-color grey
+      gis:draw ? 1
+      
+      ;let county-color item random 14 base-colors
+      ask patches gis:intersecting ?
+      [ set county-name cn
+        ;set pcolor county-color 
+      ] 
+    
+      ; set centroids
+      create-centroids 1
+      [ let xy gis:location-of gis:centroid-of ?
+        setxy (item 0 xy) (item 1 xy)
+        set shape "house"
+        set size 2 ] ]
+end

@@ -1,0 +1,24 @@
+breed [ beekeepers beekeeper ]
+breed [ spots spot ]
+spots-own [ flower-type ]
+
+breed [ centroids centroid ]
+patches-own [ county-name ]
+
+to setup-spots
+  foreach county-names
+  [ create-spots amount-of-spt
+    [ set size 2
+      set shape "star"
+      set flower-type one-of (list "PF" "AC" "LM" "SF")
+      set color color-flower flower-type
+      move-to one-of patches with [ county-name = ? ] ] ]
+end
+
+to setup-beekeepers
+  create-beekeepers amount-of-bk
+  [ set shape "person"
+    set size 1
+    move-to one-of centroids
+    if trace-on [ set color red pd ] ]
+end

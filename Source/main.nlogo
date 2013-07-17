@@ -1,12 +1,21 @@
 extensions [ gis ]
 
-breed [ beekeepers beekeeper ]
-breed [ spots spot ]
-spots-own [ flower-type ]
+globals [
+  romanian-county-borders-dataset
+  county-names ]
 
-breed [ centroids centroid ]
-patches-own [ county-name ]
-globals [ romanian-county-borders-dataset county-names ]
+__includes [ "vmodel.nls" ]
+
+
+to setup
+  
+  ca ; start fresh, clean all
+  reset-ticks ; start counter
+
+  setup-gis
+  setup-spots
+  setup-beekeepers
+end
 
 to setup-gis
     
@@ -44,97 +53,6 @@ to setup-gis
         setxy (item 0 xy) (item 1 xy)
         set shape "house"
         set size 2 ] ]
-end
-
-to setup-spots
-  foreach county-names
-  [ create-spots amount-of-spt
-    [ set size 2
-      set shape "star"
-      set flower-type one-of (list "PF" "AC" "LM" "SF")
-      set color color-flower flower-type
-      move-to one-of patches with [ county-name = ? ] ] ]
-end
-
-to setup-beekeepers
-  create-beekeepers amount-of-bk
-  [ set shape "person"
-    set size 1
-    move-to one-of centroids
-    if trace-on [ set color red pd ] ]
-end
-
-to setup
-  
-  ca ; start fresh, clean all
-  reset-ticks ; start counter
-
-  setup-gis
-  setup-spots
-  setup-beekeepers
-end
-
-to go
-  ; move according to a strategy (here, maximize the utility)
-  ask beekeepers
-  [ move-to max-one-of spots with [ not any? beekeepers-on self] [ beekeep-utility 5 flower-type (distance myself) ] ]
-  
-  tick
-end
-
-;;;;;;;;;;;;;;;;;;;;;;
-;; Helper functions ;;
-;;;;;;;;;;;;;;;;;;;;;;
-
-; beekeep-utility = honey-quant * (honey-price - prod-cost) - (travel-cost * distance * vehicles) - moving-cost
-to-report beekeep-utility [ha hi d]
-  report (honey-quant ha hi) * ((honey-price hi) - prod-cost) - (travel-cost * d)
-end
-
-to-report honey-price [ hi ]
-  if hi = "PF" [ report 3.48 ] ; Polyflower
-  if hi = "AC" [ report 4.65 ] ; Accacia
-  if hi = "LM" [ report 4.65 ] ; Lime
-  if hi = "SF" [ report 2.32 ] ; Sunflower
-  ; the following shouldn't happen
-  error 1
-end
-
-to-report prod-cost
-  report 100 / 25000 ; 1 hive = 25000 bees
-end
-
-; honey-quant = (bees-quant - 10000) * harv-index * uncertainty
-to-report honey-quant [ ha hi ]
-  report ((bees-quant ha) - 10000) * (harv-index hi) * uncertainty
-end
-
-to-report harv-index [ hi ]
-  if hi = "PF" [ report 0.000004 ]  ; Polyflower
-  if hi = "AC" [ report 0.0000135 ] ; Accacia
-  if hi = "LM" [ report 0.000018 ]  ; Lime
-  if hi = "SF" [ report 0.000006 ]  ; Sunflower
-  ; the following shouldn't happen
-  error 1
-end
-
-to-report uncertainty
-  report random-normal 1.0 harvesting-uncertainty
-end
-
-to-report bees-quant [ hive-age ]
-  ifelse hive-age <= 21
-    [ report 2000 * hive-age + 27000 ]
-    [ report 500 * hive-age + 65000 ]
-end
-
-to-report color-flower [ hi ]
-  if hi = "PF" [ report VIOLET ]  ; Polyflower
-  if hi = "AC" [ report RED ] ; Accacia
-  if hi = "LM" [ report GREEN ]  ; Lime
-  if hi = "SF" [ report YELLOW ]  ; Sunflower
-  ; the following shouldn't happen
-  error 1
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
@@ -184,7 +102,7 @@ NIL
 SLIDER
 10
 47
-47
+43
 242
 amount-of-bk
 amount-of-bk
@@ -199,7 +117,7 @@ VERTICAL
 SLIDER
 94
 49
-131
+127
 244
 harvesting-uncertainty
 harvesting-uncertainty
@@ -214,7 +132,7 @@ VERTICAL
 SLIDER
 135
 49
-172
+168
 244
 travel-cost
 travel-cost
@@ -257,7 +175,7 @@ trace-on
 SLIDER
 52
 48
-89
+85
 243
 amount-of-spt
 amount-of-spt

@@ -1,0 +1,54 @@
+;;;;;;;;;;;;;;;;;;;;;;
+;; Helper functions ;;
+;;;;;;;;;;;;;;;;;;;;;;
+
+; beekeep-utility = honey-quant * (honey-price - prod-cost) - (travel-cost * distance * vehicles) - moving-cost
+to-report beekeep-utility [ha hi d]
+  report (honey-quant ha hi) * ((honey-price hi) - prod-cost) - (travel-cost * d)
+end
+
+to-report honey-price [ hi ]
+  if hi = "PF" [ report 3.48 ] ; Polyflower
+  if hi = "AC" [ report 4.65 ] ; Accacia
+  if hi = "LM" [ report 4.65 ] ; Lime
+  if hi = "SF" [ report 2.32 ] ; Sunflower
+  ; the following shouldn't happen
+  error 1
+end
+
+to-report prod-cost
+  report 100 / 25000 ; 1 hive = 25000 bees
+end
+
+; honey-quant = (bees-quant - 10000) * harv-index * uncertainty
+to-report honey-quant [ ha hi ]
+  report ((bees-quant ha) - 10000) * (harv-index hi) * uncertainty
+end
+
+to-report harv-index [ hi ]
+  if hi = "PF" [ report 0.000004 ]  ; Polyflower
+  if hi = "AC" [ report 0.0000135 ] ; Accacia
+  if hi = "LM" [ report 0.000018 ]  ; Lime
+  if hi = "SF" [ report 0.000006 ]  ; Sunflower
+  ; the following shouldn't happen
+  error 1
+end
+
+to-report uncertainty
+  report random-normal 1.0 harvesting-uncertainty
+end
+
+to-report bees-quant [ hive-age ]
+  ifelse hive-age <= 21
+    [ report 2000 * hive-age + 27000 ]
+    [ report 500 * hive-age + 65000 ]
+end
+
+to-report color-flower [ hi ]
+  if hi = "PF" [ report VIOLET ]  ; Polyflower
+  if hi = "AC" [ report RED ] ; Accacia
+  if hi = "LM" [ report GREEN ]  ; Lime
+  if hi = "SF" [ report YELLOW ]  ; Sunflower
+  ; the following shouldn't happen
+  error 1
+end

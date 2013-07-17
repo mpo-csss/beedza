@@ -1,0 +1,3 @@
+to-report with-strategy-maximize-profit
+  report max-one-of spots with [ not any? beekeepers-on self] [ beekeep-utility 5 flower-type (distance myself) ]
+end
