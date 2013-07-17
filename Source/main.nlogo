@@ -47,6 +47,7 @@ to go
 
   ; collect honey and make money
   
+  ; tick!
   tick
   
   set yearly-ticks ticks mod 365
@@ -122,7 +123,7 @@ harvesting-uncertainty
 harvesting-uncertainty
 0
 10
-3.9
+1
 0.1
 1
 NIL
