@@ -1,9 +1,9 @@
 to-report with-collective-strategy
   ;; to explode. beekeeper do not know in advance
-  report max-one-of spots in-radius d-max with [ not any? beekeepers-on self] [ beekeep-utility ticks flower-type [amount-of-hives] of myself (distance myself) ]
+  report max-one-of spots in-radius d-max with [ not any? beekeepers-here or member? myself beekeepers-here ] [ beekeep-utility flower-type ([amount-of-hives] of myself) (distance myself) ]
 end
 
 to-report with-blind-strategy
   ;; to explode. beekeeper do not know in advance
-  report max-one-of spots in-radius d-max [ beekeep-utility ticks flower-type [amount-of-hives] of myself (distance myself) ]
+  report max-one-of spots in-radius d-max [ beekeep-utility flower-type [amount-of-hives] of myself (distance myself) ]
 end
