@@ -1,6 +1,9 @@
 to-report with-collective-strategy
   ;; to explode. beekeeper do not know in advance
-  report max-one-of spots in-radius d-max with [ not any? beekeepers-here or member? myself beekeepers-here ] [ beekeep-utility flower-type ([amount-of-hives] of myself) (distance myself) ]
+  ;let potential-empty-spots spots with [ not any? beekeepers-here or member? myself beekeepers-here ]
+  ;let pes-radius-limited potential-empty-spots in-radius d-max
+  ;report max-one-of pes-radius-limited [ beekeep-utility flower-type ([amount-of-hives] of myself) (distance myself) ]
+  report max-one-of (spots in-radius d-max) with [ not any? beekeepers-here or member? myself beekeepers-here ] [ beekeep-utility flower-type [amount-of-hives] of myself (distance myself) ]
 end
 
 to-report with-blind-strategy

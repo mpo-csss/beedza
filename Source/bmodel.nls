@@ -5,8 +5,22 @@ to setup-wild-bees
   [ set amount-of-wild-hives random max-wild-hives ]
 end
 
-to pollinate
+to go-pollinate
   if flower-season [
-    ask spots
-    [ set pollinisation-score amount-of-wild-hives + [amount-of-hives] of beekeepers-here ] ]
+    ask spots with [any? beekeepers-here]
+    [ set pollinisation-score amount-of-wild-hives + item 0 [amount-of-hives] of beekeepers-here 
+      ;show pollinisation-score
+      if pollinisation-score > 0 [ set size 5 ]] ]
+  
+  if pollinisation-map-on
+  [ clear-drawing
+    ask turtles [ hide-turtle ]
+    let max-pollinisation-score max [ pollinisation-score ] of spots
+    ask patches with [ any? spots-here ] 
+    [ let local-pollinisation-score (item 0 [ pollinisation-score ] of spots-here)
+      set pcolor scale-color RED local-pollinisation-score 0 50
+      ;set pcolor WHITE
+      ;if local-pollinisation-score > 0 [ show local-pollinisation-score ]
+      ] ]
+   diffuse pcolor 0.2
 end

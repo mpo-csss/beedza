@@ -52,6 +52,8 @@ to go
   ; tick!
   tick
   
+  go-pollinate
+  
   set yearly-ticks ticks mod 365
   if yearly-ticks = 0 [ setup-seasons-uncertainty ]
   
@@ -110,7 +112,7 @@ harvesting-uncertainty
 harvesting-uncertainty
 0
 10
-0
+1.9
 0.1
 1
 NIL
@@ -124,8 +126,8 @@ SLIDER
 travel-cost
 travel-cost
 0
-5
-5
+10
+7.5
 0.1
 1
 NIL
@@ -264,10 +266,10 @@ NIL
 VERTICAL
 
 CHOOSER
-37
-288
-275
-333
+8
+249
+246
+294
 strategy
 strategy
 "with-collective-strategy" "with-blind-strategy"
@@ -282,11 +284,22 @@ max-wild-hives
 max-wild-hives
 0
 100
-90
+52
 1
 1
 NIL
 VERTICAL
+
+SWITCH
+4
+455
+206
+488
+pollinisation-map-on
+pollinisation-map-on
+0
+1
+-1000
 
 @#$#@#$#@
 ## WHAT IS IT?

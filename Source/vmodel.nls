@@ -13,7 +13,7 @@ to setup-spots
       set shape "star"
       set flower-type one-of (list "PF" "AC" "LM" "SF")
       set color color-flower flower-type
-      move-to one-of patches with [ county-name = ? ] ] ]
+      move-to one-of patches with [ county-name = ? and not any? centroids-here ] ] ]
 end
 
 to setup-beekeepers
