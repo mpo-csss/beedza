@@ -9,7 +9,10 @@ globals [
   sbegin-uncertainty
   send-uncertainty
   lbegin-uncertainty
-  lend-uncertainty ]
+  lend-uncertainty 
+  s
+  
+  ]
 
 __includes [ 
   "setup-gis.nls"  
@@ -41,9 +44,13 @@ to go
   
   ; move to a better spot (with different strategies)
   ask beekeepers
-  [ let s with-strategy-maximize-profit
+  [ 
+    if strategy = "with-collective-strategy" [set s "with-collective-strategy" ]
+    if strategy = "with-blind-strategy" [set s "with-blind-strategy" ]
+ 
+    
     if any? spots with [s = self]
-    [ move-to s]]
+    [ move-to ( s)]]
 
   ; collect honey and make money
   
@@ -122,8 +129,8 @@ SLIDER
 travel-cost
 travel-cost
 0
-10
-2
+1
+0.4
 0.1
 1
 NIL
@@ -234,7 +241,7 @@ PENS
 SLIDER
 133
 50
-171
+166
 247
 season-uncertainty
 season-uncertainty
@@ -249,7 +256,7 @@ VERTICAL
 SLIDER
 215
 50
-253
+248
 246
 d-max
 d-max
@@ -260,6 +267,16 @@ d-max
 1
 NIL
 VERTICAL
+
+CHOOSER
+37
+288
+275
+333
+strategy
+strategy
+"with-collective-strategy" "with-blind-strategy"
+0
 
 @#$#@#$#@
 ## WHAT IS IT?
@@ -604,7 +621,7 @@ Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 
 @#$#@#$#@
-NetLogo 5.0.4
+NetLogo 5.0.3
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
