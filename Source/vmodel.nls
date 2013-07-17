@@ -16,6 +16,7 @@ to setup-spots
 end
 
 to setup-beekeepers
+  let temp 1
   file-open "beekeepers-initial-location.txt"
   while [not file-at-end?]
   [
@@ -25,7 +26,8 @@ to setup-beekeepers
     [ set shape "person"
       set size 1
       move-to one-of centroids-on patches with [ county-name = location-bk ]
-    if trace-on [ set color red pd ] ]
+    if trace-on [ set color temp pd ] ]
+    set temp temp + 3
   ]
   file-close
 end

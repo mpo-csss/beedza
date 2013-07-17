@@ -123,7 +123,7 @@ travel-cost
 travel-cost
 0
 10
-2
+0.4
 0.1
 1
 NIL
@@ -240,7 +240,7 @@ season-uncertainty
 season-uncertainty
 0
 20
-20
+4.9
 0.1
 1
 NIL
@@ -255,7 +255,7 @@ d-max
 d-max
 0
 30
-30
+12
 1
 1
 NIL
