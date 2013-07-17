@@ -1,7 +1,8 @@
 breed [ beekeepers beekeeper ]
 beekeepers-own [ age-hive ]
 breed [ spots spot ]
-spots-own [ flower-type ]
+
+beekeepers-own [ amount-of-hives ]
 
 breed [ centroids centroid ]
 patches-own [ county-name ]
@@ -27,7 +28,8 @@ to setup-beekeepers
     [ set shape "person"
       set size 1
       move-to one-of centroids-on patches with [ county-name = location-bk ]
-    if trace-on [ set color temp pd ] ]
+    if trace-on [ set color temp pd ] 
+    set amount-of-hives random-normal 45 2.0 ]
     set temp temp + 3
   ]
   file-close

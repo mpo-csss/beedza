@@ -9,8 +9,7 @@ globals [
   sbegin-uncertainty
   send-uncertainty
   lbegin-uncertainty
-  lend-uncertainty
-  ]
+  lend-uncertainty ]
 
 __includes [ 
   "setup-gis.nls"  
@@ -103,9 +102,9 @@ NIL
 1
 
 SLIDER
-94
+53
 49
-127
+86
 244
 harvesting-uncertainty
 harvesting-uncertainty
@@ -118,10 +117,10 @@ NIL
 VERTICAL
 
 SLIDER
-177
+136
 50
-210
-245
+169
+244
 travel-cost
 travel-cost
 0
@@ -161,9 +160,9 @@ trace-on
 -1000
 
 SLIDER
-52
+11
 48
-85
+44
 243
 amount-of-spt
 amount-of-spt
@@ -235,10 +234,10 @@ PENS
 "Acacia" 1.0 0 -2674135 true "" "plot harv-index \"AC\""
 
 SLIDER
-133
+92
 50
-166
-247
+125
+245
 season-uncertainty
 season-uncertainty
 0
@@ -250,10 +249,10 @@ NIL
 VERTICAL
 
 SLIDER
-215
+174
 50
-248
-246
+207
+244
 d-max
 d-max
 0
@@ -273,6 +272,21 @@ strategy
 strategy
 "with-collective-strategy" "with-blind-strategy"
 0
+
+SLIDER
+213
+51
+250
+244
+max-wild-hive
+max-wild-hive
+0
+100
+50
+1
+1
+NIL
+VERTICAL
 
 @#$#@#$#@
 ## WHAT IS IT?

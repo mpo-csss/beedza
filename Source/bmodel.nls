@@ -1,7 +1,8 @@
-breed [ hives hive ]
+spots-own [ flower-type pollinisation-score amount-of-wild-hives ]
 
-to setup-wild-hives
-
+to setup-wild-bees
+  ask spots
+  [ set amount-of-wild-hives random max-wild-hive ]
 end
 
 to polinate
