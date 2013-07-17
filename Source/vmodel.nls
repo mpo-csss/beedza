@@ -1,7 +1,7 @@
 breed [ beekeepers beekeeper ]
-breed [ spots spot ]
-
 beekeepers-own [ amount-of-hives ]
+
+breed [ spots spot ]
 
 breed [ centroids centroid ]
 patches-own [ county-name ]

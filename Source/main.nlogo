@@ -168,7 +168,7 @@ amount-of-spt
 amount-of-spt
 0
 100
-16
+24
 1
 1
 NIL
