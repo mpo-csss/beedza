@@ -130,7 +130,7 @@ travel-cost
 travel-cost
 0
 1
-0.4
+0
 0.1
 1
 NIL
@@ -247,7 +247,7 @@ season-uncertainty
 season-uncertainty
 0
 20
-4.9
+20
 0.1
 1
 NIL
@@ -262,7 +262,7 @@ d-max
 d-max
 0
 30
-12
+30
 1
 1
 NIL
@@ -276,7 +276,7 @@ CHOOSER
 strategy
 strategy
 "with-collective-strategy" "with-blind-strategy"
-0
+1
 
 @#$#@#$#@
 ## WHAT IS IT?
