@@ -329,7 +329,7 @@ PENS
 SLIDER
 8
 298
-45
+41
 448
 mean-new-spots
 mean-new-spots
@@ -344,7 +344,7 @@ VERTICAL
 SLIDER
 47
 299
-84
+80
 448
 elimination-threshold
 elimination-threshold
@@ -359,7 +359,7 @@ VERTICAL
 SLIDER
 89
 298
-126
+122
 448
 population-radius
 population-radius
@@ -378,7 +378,7 @@ SWITCH
 523
 per-county-init
 per-county-init
-0
+1
 1
 -1000
 
@@ -725,7 +725,7 @@ Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 
 @#$#@#$#@
-NetLogo 5.0.3
+NetLogo 5.0.4
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@

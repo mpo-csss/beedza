@@ -10,8 +10,7 @@ to go-pollinate
     ask spots
     [ ifelse any? beekeepers-here
       [ set pollinisation-score amount-of-wild-hives + item 0 [amount-of-hives] of beekeepers-here ]
-      [ set pollinisation-score amount-of-wild-hives ]
-    if pollinisation-score > 0 [ set size 5 ]] ]
+      [ set pollinisation-score amount-of-wild-hives ] ] ]
   
   if pollinisation-map-on
   [ clear-drawing
