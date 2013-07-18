@@ -35,6 +35,7 @@ to setup
   setup-spots
   setup-beekeepers
   setup-seasons-uncertainty
+  setup-wild-bees
 
 end
 
@@ -50,19 +51,18 @@ to go
     [ let s with-collective-strategy 
       if any? spots with [ s = self ] [ set old-spot min-one-of spots [distance myself] move-to with-collective-strategy evaluation-procedure ] ]
   if strategy = "with-blind-strategy" [ set old-spot min-one-of spots [distance myself] move-to with-blind-strategy evaluation-procedure ] ]
-  
-  ; collect honey and make money
+
+  go-pollinate
   
   ; tick!
   tick
   
-  go-pollinate
-  
   set yearly-ticks ticks mod 365
-  if yearly-ticks = 0 [ 
-    setup-seasons-uncertainty 
-    setup-new-season
-    ]
+  if yearly-ticks = 0 [
+    setup-seasons-uncertainty
+    eleminate-and-germinate
+    setup-wild-bees ]
+  
   
 end
 @#$#@#$#@
@@ -94,10 +94,10 @@ ticks
 30.0
 
 BUTTON
-10
-10
-83
-43
+60
+531
+133
+564
 NIL
 setup\n
 NIL
@@ -141,10 +141,10 @@ NIL
 VERTICAL
 
 BUTTON
-86
-10
-150
-43
+136
+531
+200
+564
 step
 go
 NIL
@@ -184,10 +184,10 @@ NIL
 VERTICAL
 
 BUTTON
-153
-10
-216
-43
+203
+531
+266
+564
 NIL
 go
 T
@@ -291,7 +291,7 @@ max-wild-hives
 max-wild-hives
 0
 100
-52
+10
 1
 1
 NIL
@@ -325,6 +325,62 @@ false
 "" ""
 PENS
 "default" 1.0 0 -16777216 true "" "plot averageProfit"
+
+SLIDER
+8
+298
+45
+448
+mean-new-spots
+mean-new-spots
+1
+10
+5
+1
+1
+NIL
+VERTICAL
+
+SLIDER
+47
+299
+84
+448
+elimination-threshold
+elimination-threshold
+0
+1
+0.1
+0.1
+1
+NIL
+VERTICAL
+
+SLIDER
+89
+298
+126
+448
+population-radius
+population-radius
+0
+100
+4
+1
+1
+NIL
+VERTICAL
+
+SWITCH
+125
+490
+286
+523
+per-county-init
+per-county-init
+0
+1
+-1000
 
 @#$#@#$#@
 ## WHAT IS IT?

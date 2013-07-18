@@ -17,13 +17,22 @@ breed [ centroids centroid ]
 patches-own [ county-name ]
 
 to setup-spots
-  foreach county-names
-  [ create-spots amount-of-spt
-    [ set size 2
-      set shape "star"
-      set flower-type one-of (list "PF" "AC" "LM" "SF")
-      set color color-flower flower-type
-      move-to one-of patches with [ county-name = ? and not any? centroids-here ] ] ]
+  ifelse per-county-init
+  [ foreach county-names
+    [ let ft one-of (list "PF" "AC" "LM" "SF")
+      create-spots amount-of-spt
+      [ set size 2
+        set shape "star"
+        set flower-type ft
+        set color color-flower flower-type
+        move-to one-of patches with [ county-name = ? and not any? centroids-here ] ] ] ]
+  [ foreach county-names
+    [ create-spots amount-of-spt
+      [ set size 2
+        set shape "star"
+        set flower-type one-of (list "PF" "AC" "LM" "SF")
+        set color color-flower flower-type
+        move-to one-of patches with [ county-name = ? and not any? centroids-here ] ] ] ]
 end
 
 to setup-beekeepers
