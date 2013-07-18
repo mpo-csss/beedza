@@ -12,6 +12,10 @@ globals [
   lend-uncertainty 
   averageProfit
   sumOfallBeekeepersProfit
+  max-profit
+  min-profit
+  max-distance
+  min-distance
  
   ]
 
@@ -50,19 +54,50 @@ to go
   [ if strategy = "with-collective-strategy" 
     [ let s with-collective-strategy 
       if any? spots with [ s = self ] [ set old-spot min-one-of spots [distance myself] move-to with-collective-strategy evaluation-procedure ] ]
-  if strategy = "with-blind-strategy" [ set old-spot min-one-of spots [distance myself] move-to with-blind-strategy evaluation-procedure ] ]
-
-  go-pollinate
+  if strategy = "with-blind-strategy" [ 
+    set old-spot min-one-of spots [distance myself] 
+    move-to with-blind-strategy 
+    ;let present-beekeepers other beekeepers 
+    if any? other beekeepers-here[
+      come-back
+    ]
+    evaluation-procedure 
+  ]
+  ]
+  
+  ; collect honey and make money
   
   ; tick!
   tick
   
   set yearly-ticks ticks mod 365
-  if yearly-ticks = 0 [
-    setup-seasons-uncertainty
-    eleminate-and-germinate
-    setup-wild-bees ]
+  if yearly-ticks = 0 [ 
+    setup-seasons-uncertainty 
+    setup-new-season
+    evaluate-best-worst
+    setup-beekeepers-new-season
+    ]
   
+end
+to evaluate-best-worst
+  
+  
+  ask beekeepers [
+    
+    if profit > max-profit [set max-profit profit]
+    if profit < min-profit [set min-profit profit]
+    if total-travel-distance > max-distance[set max-distance total-travel-distance]
+    if total-travel-distance < min-distance [set min-distance total-travel-distance]
+    
+    ]
+  
+end
+
+to setup-beekeepers-new-season
+  ask beekeepers [
+    set profit 0
+    set total-travel-distance 0
+    ]
   
 end
 @#$#@#$#@
@@ -381,6 +416,28 @@ per-county-init
 1
 1
 -1000
+
+MONITOR
+969
+576
+1044
+621
+Max Profit
+max-profit
+17
+1
+11
+
+MONITOR
+969
+625
+1041
+670
+Min Profit
+min-profit
+17
+1
+11
 
 @#$#@#$#@
 ## WHAT IS IT?
@@ -725,7 +782,7 @@ Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 
 @#$#@#$#@
-NetLogo 5.0.4
+NetLogo 5.0.3
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@

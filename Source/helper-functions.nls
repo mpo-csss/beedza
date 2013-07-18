@@ -116,3 +116,8 @@ to individual-caract
   set profit (profit + beekeep-utility  ([flower-type] of one-of spots-here) amount-of-hives travel-distance )
   set total-travel-distance (total-travel-distance + travel-distance )
 end
+
+
+to come-back
+  move-to old-spot
+end

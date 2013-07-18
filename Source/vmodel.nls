@@ -65,4 +65,6 @@ end
 to setup-new-season
   set sumOfallBeekeepersProfit 0
   set averageProfit 0
+  set max-profit 0
+  set min-profit 0
 end
