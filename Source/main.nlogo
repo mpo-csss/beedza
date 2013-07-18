@@ -304,7 +304,7 @@ d-max
 d-max
 0
 30
-8
+0
 1
 1
 NIL
@@ -318,7 +318,7 @@ CHOOSER
 strategy
 strategy
 "with-collective-strategy" "with-blind-strategy"
-1
+0
 
 SLIDER
 213
@@ -416,7 +416,7 @@ SWITCH
 523
 per-county-init
 per-county-init
-0
+1
 1
 -1000
 
