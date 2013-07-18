@@ -53,19 +53,21 @@ to go
   ask beekeepers
   [ if strategy = "with-collective-strategy" 
     [ let s with-collective-strategy 
-      if any? spots with [ s = self ] [ set old-spot min-one-of spots [distance myself] move-to with-collective-strategy evaluation-procedure ] ]
+      if any? spots with [ s = self ] [ set old-spot min-one-of spots [distance myself] move-to s evaluation-procedure ] ]
   if strategy = "with-blind-strategy" [ 
-    set old-spot min-one-of spots [distance myself] 
-    move-to with-blind-strategy 
+    let s with-collective-strategy 
+      ifelse any? spots with [ s = self ] 
+      [ set old-spot min-one-of spots [distance myself]
+        move-to with-blind-strategy
+        if any? other beekeepers-here [ come-back ]
+        evaluation-procedure ]
+      [ move-to self ]
     ;let present-beekeepers other beekeepers 
-    if any? other beekeepers-here[
-      come-back
-    ]
-    evaluation-procedure 
+    
   ]
   ]
   
-  ; collect honey and make money
+  go-pollinate
   
   ; tick!
   tick
@@ -76,11 +78,12 @@ to go
     setup-new-season
     evaluate-best-worst
     setup-beekeepers-new-season
-    ]
+    eleminate-and-germinate ]
   
 end
+
+
 to evaluate-best-worst
-  
   
   ask beekeepers [
     
@@ -286,7 +289,7 @@ season-uncertainty
 season-uncertainty
 0
 20
-10
+4
 0.1
 1
 NIL
@@ -339,7 +342,7 @@ SWITCH
 488
 pollinisation-map-on
 pollinisation-map-on
-1
+0
 1
 -1000
 
@@ -413,7 +416,7 @@ SWITCH
 523
 per-county-init
 per-county-init
-1
+0
 1
 -1000
 
@@ -782,7 +785,7 @@ Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 
 @#$#@#$#@
-NetLogo 5.0.3
+NetLogo 5.0.4
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
