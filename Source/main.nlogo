@@ -289,7 +289,7 @@ season-uncertainty
 season-uncertainty
 0
 20
-4
+8.3
 0.1
 1
 NIL
@@ -304,7 +304,7 @@ d-max
 d-max
 0
 30
-0
+5
 1
 1
 NIL
